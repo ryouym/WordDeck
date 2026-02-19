@@ -1,0 +1,24 @@
+{
+  "name": "vocab-swipe",
+  "version": "1.0.0",
+  "description": "フリックで、覚える。英単語学習アプリ",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "vocabulary",
+    "learning",
+    "flashcard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@shoelace-style/shoelace": "^2.20.1"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  }
+}
