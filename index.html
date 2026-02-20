@@ -235,6 +235,32 @@
             -ms-user-select: none;
         }
 
+        .tips-section {
+            margin-top: var(--md-sys-spacing-2);
+            padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
+            background: var(--md-sys-color-surface-container-high);
+            border-radius: 12px;
+            width: 100%;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .tips-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--md-sys-color-primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .tips-text {
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
         .tap-hint {
             /* Label Large */
             position: absolute;
@@ -454,88 +480,175 @@
 
     <script>
         // Word data - Replace with your own vocabulary
-        const WORD_DATA = `
-excavation,発掘
-exemplary,模範的な、見せしめの
-sluggish,(経済などが)停滞ぎみの；〈人・物などが〉反応が鈍い
-prevalent,流行する、流行っている
-outreach,奉仕［支援］活動
-irritant,刺激物；いらいらさせるもの
-blurry,ぼやけた、曖昧な
-edge,(～に対する）優位、有利さ
-fiscal,財務上の
-honored,名誉ある、光栄に思って
-specialize in,専攻する、専門にする
-agenda,議題、案件
-fare,運賃、料金
-courier,配達員、添乗員、案内人、ガイド
-landlord,家主
-safety precaution,安全順守事項
-special offer,大安売りの品、特価提供、タイムサービス
-ventilation,換気、風通し
-reach,達する、到達する
-payroll,給与支払名簿、給与
-attraction,観光名所、魅力
-redecorate,改装する
-inventory,在庫表、棚卸し表
-registration,登録、記載
-cuisine,料理(法)
-transfer,移動 / 移す、動かす、運ぶ
-budget,予算に合った、手頃な / 予算、費用
-tenant,賃借人
-stay tuned,乞うご期待
-blueprint,青写真、設計図
-flood,洪水、氾濫
-as of,～の時点で；（～の日付）をもって、（ある時点を基点として）それ以後は
-deposit,預ける、預金する / 手付金、預金(高)
-stopover,立ち寄る場所、短期滞在
-detour,回り道、迂回路
-entree,主要料理、アントレー
-expense,出費、費用
-moderate,(気候など)穏やかな
-floor plan,(建物の)間取り図
-cargo,貨物、積み荷
-residence,住宅、居住
-be in charge of,～を担当する
-enroll,入会する
-soar,舞い上がる、高く上がる、高まる
-dairy product,乳製品
-spoil,台なしにする、腐らせる
-corporation,株式会社、法人
-certificate,証明書、資格
-sponsor,スポンサー、後援者
-property,財産、建物
-wonder,知りたいと思う
-necessarily,必ず、必然的に
-obstacle,障害物
-obstruct,ふさぐ、遮る
-proceed,進む (to), 進行する (with)、続行する
-notable,注目に値する、著しい、顕著な
-interfere,妨げる、～の邪魔をする(with)
-gratitude,感謝、謝意
-interrupt,中断する、遮る
-reclaim,(～を）取り戻す、返してもらう、回収する
-inaccuracy,間違い、不正確さ
-unprecedented,前例のない
-honor,名誉、尊敬、光栄 / 名誉を与える、尊敬する
-brief,～に事前に指示、情報を与える / 手短な、簡単な
-apparent,見たところ～らしい；（～にとって）明らかな
-bankrupt,破産した
-consolidate,一つにまとめる、固める、強化する
-alteration,変更、改築
-assignment,割り当てられた仕事
-apparently,見たところでは、どうも
-appraisal,評価
-appoint,任命する
-freshness,新鮮さ、新鮮味
-issue,発行する / 問題、論点
-measure,測定する / 方策、計量
-accidentally,偶然；思いがけなく
-review,検討する
-delighted,喜んでいる
-patience,忍耐、忍耐力
-overseas,海外へ
-rush,急ぐこと、殺到 / 急ぐ`.trim();
+        const WORD_DATA = `go on,"起こる (65%)、進む (13%)",「進行・接触」のon。舞台の上で何かが進行し続けるイメージ。ビジネスの「Goサイン」もここから。
+pick up,受け取る・拾い上げる (71%),「つまみ上げる」動作。タクシーの「ピックアップ」や、情報を「拾う」感覚。
+come back,戻る (97%),「こちら側へ(come)」「後ろへ(back)」戻る動作。会話の話題を戻す際にも頻出。
+come up,"提案する (34%)、まもなく起こる (28%)",「水面に浮かび上がる」イメージ。アイデアが「湧く」感覚。
+go back,戻る (90%),「あちら側へ(go)」「後ろへ(back)」離れる動き。過去の時代や場所へ視点を移す感覚。
+find out,発見する・知識を得る (100%),「外へ(out)」出すことで「見つける(find)」。隠れていた事実を明るみに出す。
+come out,"現れる (38%)、発売される (10%)",「中から外へ(out)」出てくる動作。新作の「カミングアウト」や出版。
+go out,"外出する (57%)、積極的に〜する (20%)",「家の外へ(out)」出る社交的イメージ。火が「消える」際も外へ逃げる動き。
+point out,指摘する (89%),指で「点(point)」を「指し示す」動作。特定の事実に注目させるビジネスの必須表現。
+grow up,成長する・成人する (98%),「上へ(up)」向かって「成長する(grow)」。心身ともに大人になる物理的変化。
+set up,"設立する (65%)、設置する (17%)",「特定の場所(set)」に「立てる(up)」。組織の立ち上げやPCの「セットアップ」。
+turn out,判明する・結果になる (91%),袋を「ひっくり返して(turn)」「出す(out)」と中身が見えるイメージ。
+get out,外に出る・出す (76%),「外の状態(out)」を「手に入れる(get)」。脱出や排除の強い動作。
+come in,"中に入る (65%)、関与する (14%)",「中へ(in)」向かって「来る(come)」。新メンバーがプロジェクトに「入る」際も使用。
+take on,"引き受ける (42%)、性質を帯びる (42%)",責任を「取って(take)」「身につける(on)」。仕事の担当や色の変化。
+give up,やめる・諦める (81%),持っていたものを「上(up)」へ「差し出す(give)」。お手上げ状態で放棄する。
+make up,"構成する (43%)、埋め合わせる (19%)",「作り上げて(make)」「満たす(up)」。化粧の「メイク」や欠員の補填。
+end up,結局〜になる (100%),「終わり(end)」が「完了(up)」する。予期せぬ最終状態にたどり着く感覚。
+get back,戻る (79%),「戻った状態(back)」を「手に入れる(get)」。元の場所や話題へ確実に帰還する。
+look up,見上げる (88%),視線を「上(up)」へ「向ける(look)」。辞書で言葉を「調べる」際も視線を上げる動作。
+figure out,理解する・解明する (100%),「形(figure)」を書いて「外へ(out)」導き出す。計算や論理で答えを出す。
+sit down,座る (100%),「座った状態」で「下へ(down)」重心を落とす。着席の物理動作。
+get up,立ち上がる (92%),「上の状態(up)」を「手に入れる(get)」。起床や起立。
+take out,"取り出す (51%)、取得する (13%)",「中から外へ(out)」「取る(take)」。食事の「テイクアウト」や書類発行。
+come on,"頑張れ (50%)、おいおい (20%)",「こちらへ(come)」「進め(on)」。相手を促したり、呆れて詰め寄る。
+go down,"下がる (29%)、減少する (27%)",「下へ(down)」移動する。物価の下落や船の沈没など「低下」のイメージ。
+show up,現れる (81%),姿を「見せて(show)」「現れる(up)」。待ち合わせ場所にひょっこり現れる。
+take off,"脱ぐ (41%)、離陸する (14%)",「離脱」のoff。地面や体から「離して(off)」「取る(take)」。
+work out,"計画する (33%)、運動する (23%)",「最後まで(out)」「動く(work)」。詳細を練る、ジムで汗を流す。
+stand up,"立ち上がる (68%)、意見を表明する (11%)",「上へ(up)」向かって「立つ(stand)」。公の場で堂々と起立して発言。
+come down,"降りる (33%)、結局〜になる (21%)",「下へ(down)」向かって「来る(come)」。問題が一点に「集約される」感覚。
+go ahead,進める・取りかかる (99%),「前方(ahead)」へ「進む(go)」。許可を出す際の「どうぞ」の決まり文句。
+go up,"増加する (48%)、上がる (21%)",「上へ(up)」向かって「行く(go)」。株価や気温の上昇、手が上がる動き。
+look back,"回想する (50%)、振り返る (30%)",「後ろを(back)」「見る(look)」。過去の思い出や物理的な後方確認。
+wake up,目が覚める (92%),「覚醒した状態(up)」に「なる(wake)」。意識がパッと上に向く感覚。
+carry out,実行する (64%)・実施する (34%),計画を「外へ(out)」運び出し「完了まで運ぶ(carry)」。実務の遂行。
+take over,引き継ぐ (97%),「支配を越えて(over)」「取る(take)」。管理権や会社の買収。
+hold up,"掲げる (54%)、遅らせる (12%)",「上へ(up)」持ち上げて「維持する(hold)」。掲示や、進行を止める壁。
+pull out,取り出す (75%),「外へ(out)」「引く(pull)」。ポケットから物を出す、戦線から「撤退する」。
+turn around,"向きを変える (68%)、好転させる (25%)",「周囲(around)」を「回す(turn)」。Uターンや経営の立て直し。
+take up,"占める (26%)、趣味を始める (11%)",「上へ(up)」「取る(take)」。スペースを埋める、新しい活動を拾い上げる。
+look down,下を見る (92%),「下を(down)」「見る(look)」。物理的な視線の移動。
+put up,"掲示する (23%)、我慢する (19%)",「上へ(up)」「置く(put)」。壁への貼り紙や、不快な状況を据え置く。
+bring back,戻す・復活させる (53%),「戻った状態(back)」へ「持ってくる(bring)」。貸した物の返却や記憶の再生。
+bring up,"提起する (60%)、育てる (18%)",「上へ(up)」「持ってくる(bring)」。議題を出す、子供を成人まで引き上げる。
+look out,"外を見る (51%)、世話をする (26%)",「外を(out)」「見る(look)」。窓の外を見ることや、周囲を警戒し守る。
+bring in,持ち込む (52%)・起用する (31%),「中へ(in)」「持ってくる(bring)」。新技術の導入や外部専門家の招集。
+open up,"広げる (43%)、開ける (28%)",「開いて(open)」「完了(up)」する。市場の開放や、バッグを全開にする。
+check out,確認する・調べる (97%),「隅々まで(out)」「調べる(check)」。ホテルや情報の「チェックアウト」。
+move on,"次へ移る (42%)、立ち直る (25%)",「先へ(on)」「動く(move)」。会議の次の議題や、失恋からの前進。
+put out,"公表する (47%)、消す (14%)",「外へ(out)」「置く(put)」。警報を出す、火を消し止める。
+look around,見回す (100%),「周囲を(around)」「見る(look)」。店内をぶらぶら見学する。
+catch up,"巻き込まれる (26%)、追いつく (18%)",「捕まえて(catch)」「近づく(up)」。遅れを取り戻し、同じ水準に達する。
+go in,中に入る (90%),「中へ(in)」「行く(go)」。建物や部屋への移動。
+break down,"故障する (24%)、分類する (20%)",「粉々に(down)」「壊す(break)」。機械の停止や、複雑な情報の細分化。
+get off,"降りる (54%)、罰を免れる (12%)",「離脱(off)」の状態を「得る(get)」。乗り物から離れる、罪を逃れる。
+keep up,同じペースを保つ (46%),「上の状態(up)」を「維持する(keep)」。遅れずに付いていく。
+put down,置く (62%),「下へ(down)」「置く(put)」。手に持っているものを床や机に置く。
+reach out,手を伸ばす (49%),「外へ(out)」「手を伸ばす(reach)」。物理的な動作と、支援や連絡の働きかけ。
+go off,"鳴る (22%)、爆発する (14%)",「急激な離脱(off)」へ「行く(go)」。アラームの作動や爆弾の炸裂。
+cut off,"切り落とす (27%)、遮る (25%)",「切り離して(cut)」「離す(off)」。供給の停止や発言の遮断。
+turn back,引き返す (52%),「後ろへ(back)」「向く(turn)」。目的地への進行をやめて戻る。
+pull up,停車する (47%)・持ち上げる (36%),「引いて(pull)」「止める・上げる(up)」。手綱を引いて馬や車を止める。
+set out,"着手する (43%)、出発する (27%)",「外へ(out)」「配置する(set)」。旅立ちや、計画を具体的に提示する。
+clean up,掃除する (74%),「きれいに(clean)」「完了(up)」させる。汚れた場所や不適切な言動を正す。
+shut down,停止する (94%),「閉じて(shut)」「下げる(down)」。PCの電源オフや工場の閉鎖。
+turn over,ひっくり返す (60%)・明け渡す (34%),「向こう側へ(over)」「回す(turn)」。食材を裏返す、権限を譲る。
+slow down,減速する (89%),「遅い(slow)」状態で「下げる(down)」。速度や経済成長の鈍化。
+wind up,結局〜になる (87%),「巻いて(wind)」「完了(up)」する。ネジを巻ききった最後の状態。
+turn up,"見つかる (48%)、音を上げる (22%)",「上へ(up)」「回す(turn)」。隠れていた物が出る、音量つまみを回す。
+line up,並ぶ (75%),「列(line)」になって「整う(up)」。タクシーや人が整列する。
+take back,取り戻す (50%),「後ろへ(back)」「取る(take)」。貸した物の回収や、過去の場所へ連れ戻す。
+lay out,提示する (46%)・並べる (35%),「外へ(out)」「横たえる(lay)」。資料のレイアウトや計画の詳述。
+go over,"向こうへ行く (63%)、調べる (20%)",「〜を越えて(over)」「行く(go)」。場所の移動や、書類の全項目確認。
+hang up,電話を切る (77%),受話器を「上(up)」の「フックにかける(hang)」。通話終了の物理動作。
+go through,"経験する (61%)、承認される (10%)",「〜の間を(through)」「行く(go)」。困難を通り抜ける、法案の通過。
+hold on,"離さない (57%)、待つ (36%)",「接触状態(on)」で「持つ(hold)」。電話を切らずに保持する。
+pay off,完済する (49%)・報われる (49%),「完全に(off)」借金を「払う(pay)」。努力が実を結び利益が出る。
+hold out,差し出す (61%),「外へ(out)」「出す(hold)」。手や物を相手に向けて差し出す動作。
+break up,"終わる (59%)、分割する (35%)",「粉々に(up)」「壊す(break)」。男女の別れや、ソ連の崩壊。
+bring out,"目立たせる (36%)、発売する (33%)",「外へ(out)」「持ってくる(bring)」。持ち味を引き出す、新譜を出す。
+pull back,撤退する (67%),「後ろへ(back)」「引く(pull)」。軍隊の引き揚げや、髪を後ろに下げる。
+hang on,"待つ (42%)、離さない (36%)",「接触(on)」して「しがみつく(hang)」。電話を切らずに待つ、職にしがみつく。
+build up,増強する (76%),「上へ(up)」「建てる(build)」。緊張感や体力を徐々に積み上げる。
+throw out,"拒否する (29%)、捨てる (26%)",「外へ(out)」「投げる(throw)」。ゴミを捨てる、案を却下する。
+hang out,ぶらぶら過ごす (84%),「外に(out)」「ぶら下がる(hang)」。洗濯物を干す動作から、外で遊ぶ感覚。
+put on,身につける (52%),「接触(on)」した場所に「置く(put)」。服を着る、イベントを開催する。
+get down,"取りかかる (26%)、降りる (18%)",「下の状態(down)」を「得る(get)」。腰を据えて仕事に集中する。
+come over,やって来る (95%),「越えて(over)」「来る(come)」。川や道を越えて、こちら側へ立ち寄る。
+move in,入居する (63%),「中へ(in)」「動く(move)」。新しい家に引っ越す、敵地へ攻め込む。
+start out,〜として始める (95%),「外へ(out)」「出発する(start)」。キャリアの第一歩を踏み出す。
+call out,大声で叫ぶ (79%),「外へ(out)」「声を出す(call)」。名前を呼ぶ、大きな声を発する。
+sit up,起き上がる (94%),「上へ(up)」「座る(sit)」。寝た状態から背筋を伸ばして座り直す。
+turn down,断る (83%),「下へ(down)」「向ける(turn)」。提出された書類を却下して下に置くイメージ。
+back up,支援する (21%)・後退する (26%),「後ろ(back)」を「支える(up)」。後退や、証拠で裏付ける「バックアップ」。
+put back,元の場所に戻す (86%),「後ろ・元の位置(back)」に「置く(put)」。冷蔵庫に牛乳を戻すなど。
+send out,発送する (57%)・派遣する (33%),「外へ(out)」「送る(send)」。郵便物の送付や軍隊の派遣。
+get in,"中に入る (66%)、参加する (13%)",「中の状態(in)」を「得る(get)」。車への乗車や、儲け話への参加。
+blow up,爆破する (76%),「上へ(up)」「吹き飛ばす(blow)」。爆弾での破壊や、激怒による感情の爆発。
+carry on,続ける (66%),「接触・進行(on)」したまま「運ぶ(carry)」。困難でも活動を継続する。
+set off,"出発する (31%)、引き起こす (26%)",「離脱(off)」の状態に「セットする(set)」。旅立ちや、アラームの作動。
+keep on,し続ける (93%),「接触・進行(on)」を「維持する(keep)」。絶え間なく動作を反復する。
+run out,使い果たす (50%),「外へ(out)」「走る(run)」。中身が外に走り去り、空っぽになる感覚。
+make out,"理解する (61%)、見せかける (11%)",「外へ(out)」「作り出す(make)」。困難の中で意味を構成し理解する。
+shut up,黙る (97%),「閉じて(shut)」「完了(up)」させる。口を完全に閉じて音を止める。
+turn off,切る (70%),「離脱(off)」へ「回す(turn)」。スイッチを切る、人の興味を削ぐ。
+bring about,引き起こす (100%),「周囲(about)」に「持ってくる(bring)」。変化や結果を身近に生じさせる。
+step back,一歩引いて考える (23%),「後ろへ(back)」「歩く(step)」。客観視するために物理的・心理的に下がる。
+lay down,横になる (28%)・定める (17%),「下へ(down)」「横たえる(lay)」。休息や、規則を「設置」する感覚。
+bring down,下げる (26%)・倒す (25%),「下へ(down)」「持ってくる(bring)」。飛行機を落とす、政権を倒す。
+stand out,際立つ (61%),「外へ(out)」「立つ(stand)」。集団の中で一人だけ外側に立っているように目立つ。
+come along,現れる (73%),「道に沿って(along)」「来る(come)」。チャンスがやって来る、誰かと同行する。
+play out,展開する (80%),「最後まで(out)」「演じる(play)」。筋書き通りに物事が進展し、完結する。
+break out,勃発する (70%),「外へ(out)」「壊して出る(break)」。戦争や火事、発疹などが急に現れる。
+go around,広まる (76%),「周囲を(around)」「行く(go)」。噂やウイルスが巡り歩く。
+walk out,立ち去る (82%),「外へ(out)」「歩く(walk)」。怒って会議室を出るなど。
+get through,"通じる (23%)、切り抜ける (15%)",「貫通(through)」した状態を「得る(get)」。困難の突破や電話の開通。
+hold back,抑える (18%),「後ろへ(back)」「留める(hold)」。感情の抑制や、群衆を押し止める。
+write down,書き留める (98%),「紙の上(down)」に「書く(write)」。情報を記録する。
+move back,戻る (75%),「後ろへ(back)」「動く(move)」。以前住んでいた場所へ戻る。
+fill out,記入する (82%),「外へ(out)」「満たす(fill)」。空白を全て埋めて書類を完成させる。
+sit back,ゆったり座る (66%),「後ろへ(back)」「座る(sit)」。椅子の背もたれに寄りかかる、傍観する。
+rule out,除外する (94%),「外へ(out)」「線(rule)を引く」。可能性の枠外に追い出す。
+move up,昇進する (47%),「上へ(up)」「動く(move)」。組織の階段を上がる、物理的に上へ移動する。
+pick out,選ぶ (72%),「外へ(out)」「つまみ上げる(pick)」。多くの選択肢から一つを抽出する。
+take down,取り外す (39%),「下へ(down)」「取る(take)」。掲示物の撤去や、敵の撃退。
+get on,続ける (51%)・乗る (15%),「接触・進行(on)」の状態を「得る(get)」。バスへの乗車や作業の再開。
+give back,返す (100%),「後ろ・元の主へ(back)」「与える(give)」。恩返しや物の返却。
+hand over,引き渡す (42%),「〜を越えて(over)」「手渡す(hand)」。権限や所有物を相手の手に渡す。
+sum up,要約する (97%),「合計(sum)」を「出し切る(up)」。要点を一つにまとめ上げる。
+move out,引っ越す (95%),「外へ(out)」「動く(move)」。現在の住居を離れる。
+come off,外れる (34%),「離脱(off)」の状態に「なる(come)」。ボタンが取れる、特定の印象を与える。
+pass on,伝える (38%),「先へ(on)」「渡す(pass)」。情報の伝達や、世代間の継承。
+take in,理解する (18%)・騙す (10%),「中へ(in)」「取り込む(take)」。知識の吸収や、懐に飛び込んで欺く。
+set down,置く (75%),「下へ(down)」「置く(set)」。荷物を床にしっかり置く動作。
+sort out,解決する (51%),「外へ(out)」「分ける(sort)」。問題を整理して解決策を導き出す。
+follow up,追求する (46%),「上・完了(up)」へ向かって「追う(follow)」。事後の確認や追加調査。
+come through,伝わる (21%)・成し遂げる (20%),「通り抜けて(through)」「来る(come)」。困難を越えて結果が出る。
+settle down,落ち着く (31%),「下へ(down)」「定着させる(settle)」。腰を据えて静かな生活を送る。
+come around,意見を変える (22%),「周囲(around)」を「回って来る(come)」。遠回りして同じ意見に到達する。
+fill in,代理を務める (31%),「中へ(in)」「満たす(fill)」。欠員の穴を埋める、情報を補完する。
+give out,配る (40%)・尽きる (12%),「外へ(out)」「出す(give)」。資料の配布や、機能の停止。
+give in,屈する (100%),「中へ(in)」「与える(give)」。自分の意志を相手の内側に明け渡す。
+go along,同意する (28%),「〜に沿って(along)」「行く(go)」。他人の計画に並走して協力する。
+break off,中断する (28%),「離脱(off)」した状態に「壊す(break)」。会話を急に止める、関係を断つ。
+put off,延期する (68%),「離れた位置(off)」に「置く(put)」。予定を遠くに追いやって先延ばす。
+come about,起こる (82%),「周囲(about)」に「現れる(come)」。予期せぬ出来事が身近に発生する。
+close down,閉鎖する (87%),「閉じて(close)」「下げる(down)」。シャッターを下ろして営業を止める。
+put in,つぎ込む (27%),「中へ(in)」「置く(put)」。時間や努力をプロジェクトに投入する。
+set about,着手する (97%),「周囲(about)」に「配置する(set)」。特定の目的のために準備し始める。`.trim();
+
+        // Parse CSV line (handles quoted fields containing commas)
+        function parseCSVLine(line) {
+            const fields = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                if (line[i] === '"') {
+                    inQuotes = !inQuotes;
+                } else if (line[i] === ',' && !inQuotes) {
+                    fields.push(current.trim());
+                    current = '';
+                } else {
+                    current += line[i];
+                }
+            }
+            fields.push(current.trim());
+            return fields;
+        }
 
         // Parse word data
         function parseWordData(data) {
@@ -543,10 +656,11 @@ rush,急ぐこと、殺到 / 急ぐ`.trim();
                 .map(line => line.trim())
                 .filter(line => line.length > 0)
                 .map(line => {
-                    const parts = line.split(',');
+                    const parts = parseCSVLine(line);
                     return {
-                        english: parts[0].trim(),
-                        japanese: parts.slice(1).join(',').trim()
+                        english: parts[0] || '',
+                        japanese: parts[1] || '',
+                        tips: parts[2] || ''
                     };
                 });
         }
@@ -924,6 +1038,7 @@ rush,急ぐこと、殺到 / 急ぐ`.trim();
                                 </div>
                                 <div class="card-back">
                                     <div class="japanese-word">${word.japanese}</div>
+                                    ${word.tips ? `<div class="tips-section"><span class="tips-label">TIPS</span><div class="tips-text">${word.tips}</div></div>` : ''}
                                 </div>
                             </div>
                             <div class="tap-hint">タップして意味を表示</div>
