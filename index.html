@@ -102,6 +102,79 @@
         }
 
         /* Progress Bar */
+        .progress-wrapper {
+            width: 100%;
+            max-width: 448px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .progress-bar-track {
+            flex: 1;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            position: relative;
+            transition: background 0.4s var(--md-sys-motion-easing-standard);
+        }
+
+        .progress-bar-track.over-goal {
+            background: var(--md-sys-color-primary);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--md-sys-color-primary);
+            border-radius: 2px;
+            transition: width 0.35s var(--md-sys-motion-easing-standard);
+        }
+
+        .progress-bar-track.over-goal .progress-bar-fill {
+            background: #f39c12;
+        }
+
+        @keyframes goal-pulse {
+            0%   { transform: scaleY(1);   box-shadow: none; }
+            30%  { transform: scaleY(2.5); box-shadow: 0 0 12px rgba(63, 81, 181, 0.75); }
+            65%  { transform: scaleY(1.6); box-shadow: 0 0 6px rgba(63, 81, 181, 0.4); }
+            100% { transform: scaleY(1);   box-shadow: none; }
+        }
+
+        .progress-bar-track.pulse {
+            animation: goal-pulse 0.9s ease-out forwards;
+            transform-origin: center;
+        }
+
+        .progress-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 44px;
+            text-align: right;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-count {
+            color: #475569;
+        }
+
+        .progress-separator {
+            color: #94a3b8;
+        }
+
+        .progress-goal {
+            color: #94a3b8;
+        }
+
+        .progress-bonus {
+            color: #f39c12;
+        }
+
         /* Card Container */
         .card-container {
             position: relative;
@@ -692,7 +765,10 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 this._onMouseUp = null;
 
                 this.synth = window.speechSynthesis;
-                
+
+                this.DAILY_GOAL = 80;
+                this.dailyCount = this.loadDailyCount();
+
                 this.initializeQueue();
                 this.render();
             }
@@ -712,6 +788,59 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 } catch (e) {
                     console.error('Failed to save to storage:', e);
                 }
+            }
+
+            loadDailyCount() {
+                try {
+                    const today = new Date().toISOString().slice(0, 10);
+                    const data = localStorage.getItem('daily_progress');
+                    if (data) {
+                        const parsed = JSON.parse(data);
+                        if (parsed.date === today) return parsed.count;
+                    }
+                    return 0;
+                } catch (e) {
+                    return 0;
+                }
+            }
+
+            saveDailyCount() {
+                try {
+                    const today = new Date().toISOString().slice(0, 10);
+                    localStorage.setItem('daily_progress', JSON.stringify({
+                        date: today,
+                        count: this.dailyCount
+                    }));
+                } catch (e) {}
+            }
+
+            renderProgressBar() {
+                const count = this.dailyCount;
+                const goal = this.DAILY_GOAL;
+                const isOverGoal = count >= goal;
+
+                const lapCount = isOverGoal ? count - goal : count;
+                const percentage = Math.min((lapCount / goal) * 100, 100);
+
+                const pulseClass = count === goal ? ' pulse' : '';
+                const overClass = isOverGoal ? ' over-goal' : '';
+
+                let labelHTML;
+                if (!isOverGoal) {
+                    labelHTML = `<span class="progress-count">${count}</span><span class="progress-separator"> / </span><span class="progress-goal">${goal}</span>`;
+                } else {
+                    const bonus = count - goal;
+                    labelHTML = `<span class="progress-count">${goal}</span><span class="progress-separator"> + </span><span class="progress-bonus">${bonus}</span>`;
+                }
+
+                return `
+                    <div class="progress-wrapper">
+                        <div class="progress-bar-track${overClass}${pulseClass}">
+                            <div class="progress-bar-fill" style="width: ${percentage}%"></div>
+                        </div>
+                        <div class="progress-label">${labelHTML}</div>
+                    </div>
+                `;
             }
 
             initializeQueue() {
@@ -835,6 +964,8 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
             nextWord() {
                 this.currentIndex++;
                 this.isFlipped = false;
+                this.dailyCount++;
+                this.saveDailyCount();
 
                 if (this.getCurrentWord()) {
                     this.render();
@@ -1035,6 +1166,7 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 const totalWords = this.currentQueue.length;
 
                 document.getElementById('app').innerHTML = `
+                    ${this.renderProgressBar()}
                     <div class="card-container">
                         <div class="card ${this.isFlipped ? 'flipped' : ''}">
                             <div class="card-content">
