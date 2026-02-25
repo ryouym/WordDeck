@@ -6,7 +6,7 @@
     <title>FLICK - 英単語暗記</title>
     <style>
         /* Material Design 3 - Based on design_system.md */
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
         /* Reset & Base */
         * {
@@ -37,7 +37,7 @@
             --md-sys-color-on-primary-container: #FFFFFF;
 
             /* Surface Palette */
-            --md-sys-color-surface: #FBFCFE;
+            --md-sys-color-surface: #f9fafb;
             --md-sys-color-surface-container: #F5F6FB;
             --md-sys-color-surface-container-high: #EFF0F6;
             --md-sys-color-on-surface: #1C1B1F;
@@ -96,8 +96,8 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding: var(--md-sys-spacing-3) var(--md-sys-spacing-2) var(--md-sys-spacing-3);
-            gap: var(--md-sys-spacing-3);
+            padding: var(--md-sys-spacing-2) var(--md-sys-spacing-3) 8px;
+            gap: 8px;
             position: relative;
         }
 
@@ -106,7 +106,7 @@
         .card-container {
             position: relative;
             width: 100%;
-            max-width: 480px;
+            max-width: 448px;
             flex: 1;
             min-height: 0;
             perspective: 1000px;
@@ -119,13 +119,14 @@
             width: 100%;
             height: 100%;
             background: #FFFFFF;
-            border-radius: var(--md-sys-shape-corner-large);
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f1f5f9;
+            border-radius: 40px;
+            box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.05), 0px 8px 10px -6px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            padding: var(--md-sys-spacing-6) var(--md-sys-spacing-4) var(--md-sys-spacing-4);
+            padding: 33px;
             cursor: grab;
             user-select: none;
             touch-action: none;
@@ -142,32 +143,36 @@
             transition: none !important;
         }
 
-        .card-back {
-            width: 100%;
+        .card-content {
+            position: absolute;
+            inset: 33px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: opacity var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard),
-                        max-height var(--md-sys-motion-duration-medium) var(--md-sys-motion-easing-standard);
+            justify-content: center;
         }
 
-        .card.flipped .card-back {
-            opacity: 1;
-            max-height: 500px;
+        .japanese-word,
+        .tips-section {
+            transition: opacity var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard);
+        }
+
+        .card:not(.flipped) .japanese-word,
+        .card:not(.flipped) .tips-section {
+            opacity: 0;
+            pointer-events: none;
         }
 
         /* Typography - M3 Type Scale */
         .english-word {
             /* Headline Large */
-            font-size: clamp(32px, 8vw, 56px);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(32px, 10vw, 56px);
             font-weight: 700;
             text-align: center;
             line-height: 1.2;
-            letter-spacing: 0;
-            color: var(--md-sys-color-on-surface);
+            letter-spacing: -1.2px;
+            color: #0f172a;
             margin-bottom: var(--md-sys-spacing-4);
             user-select: none;
             -webkit-user-select: none;
@@ -177,12 +182,13 @@
 
         .japanese-word {
             /* Body Large */
-            font-size: clamp(18px, 4vw, 24px);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: clamp(18px, 6vw, 24px);
             font-weight: 500;
             text-align: center;
-            line-height: 1.5;
-            letter-spacing: 0.5px;
-            color: var(--md-sys-color-on-surface);
+            line-height: 1.354;
+            letter-spacing: 0;
+            color: #334155;
             margin-bottom: var(--md-sys-spacing-2);
             user-select: none;
             -webkit-user-select: none;
@@ -192,16 +198,17 @@
 
         .tips-section {
             margin-top: var(--md-sys-spacing-2);
-            padding: var(--md-sys-spacing-1) var(--md-sys-spacing-2);
-            background: var(--md-sys-color-surface-container-high);
-            border-radius: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 16px;
             width: 100%;
             text-align: left;
             box-sizing: border-box;
         }
 
         .tips-label {
-            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
             font-weight: 700;
             letter-spacing: 1px;
             color: var(--md-sys-color-primary);
@@ -210,20 +217,21 @@
         }
 
         .tips-text {
-            font-size: 13px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 14px;
             font-weight: 400;
-            line-height: 1.6;
-            color: var(--md-sys-color-on-surface-variant);
+            line-height: 1.625;
+            color: #475569;
         }
 
         /* Action Buttons */
         .action-buttons {
             display: flex;
-            gap: 48px;
+            gap: 64px;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            padding-bottom: var(--md-sys-spacing-1);
+            padding-bottom: 0;
         }
 
         .action-btn {
@@ -236,14 +244,17 @@
         }
 
         .action-btn-icon {
-            width: 56px;
-            height: 56px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 22px;
             font-weight: 500;
+            background: #FFFFFF;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0px 10px 25px -5px rgba(0, 0, 0, 0.05), 0px 8px 10px -6px rgba(0, 0, 0, 0.05);
             transition: opacity var(--md-sys-motion-duration-short) var(--md-sys-motion-easing-standard);
         }
 
@@ -252,20 +263,19 @@
         }
 
         .unknown-btn .action-btn-icon {
-            background: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-on-surface-variant);
+            color: #94a3b8;
         }
 
         .known-btn .action-btn-icon {
-            border: 1.5px solid var(--md-sys-color-on-surface-variant);
-            color: var(--md-sys-color-on-surface-variant);
+            color: #94a3b8;
         }
 
         .action-btn-label {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--md-sys-color-on-surface-variant);
-            letter-spacing: 0.1px;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            letter-spacing: 1px;
         }
 
         /* Swipe Overlay */
@@ -1006,8 +1016,8 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 document.getElementById('app').innerHTML = `
                     <div class="card-container">
                         <div class="card ${this.isFlipped ? 'flipped' : ''}">
-                            <div class="english-word">${word.english}</div>
-                            <div class="card-back">
+                            <div class="card-content">
+                                <div class="english-word">${word.english}</div>
                                 <div class="japanese-word">${word.japanese}</div>
                                 ${word.tips ? `<div class="tips-section"><span class="tips-label">TIPS</span><div class="tips-text">${word.tips}</div></div>` : ''}
                             </div>
@@ -1018,11 +1028,19 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                     </div>
                     <div class="action-buttons">
                         <div class="action-btn unknown-btn" onclick="app.markAsUnknown()">
-                            <div class="action-btn-icon">?</div>
+                            <div class="action-btn-icon">
+                                <svg width="13" height="24" viewBox="0 0 13.0086 23.7305" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.09033 5.68359C0.0942379 5.27344 -0.315918 3.98438 0.270019 3.10547C1.50049 1.28906 3.49268 0 6.18799 0C9.11768 0 11.1099 1.34766 12.1646 2.98828C13.0435 4.45312 13.5122 7.14844 12.1646 9.14062C10.6997 11.3672 9.23486 12.0117 8.47314 13.4766C8.29736 13.7695 8.18018 14.0625 8.12158 14.6484C8.00439 15.5273 7.24268 16.2305 6.30518 16.2305C5.25049 16.2305 4.31299 15.293 4.48877 14.2383C4.54736 13.5938 4.66455 12.9492 5.01611 12.3047C6.01221 10.5469 7.82861 9.55078 8.94189 8.02734C10.0552 6.38672 9.41064 3.39844 6.18799 3.39844C4.72314 3.39844 3.78564 4.16016 3.19971 5.03906C2.78955 5.74219 1.85205 5.97656 1.09033 5.68359ZM8.70752 21.2695C8.70752 22.6172 7.53564 23.7305 6.18799 23.7305C4.84033 23.7305 3.66846 22.6172 3.66846 21.2695C3.66846 19.8633 4.84033 18.75 6.18799 18.75C7.53564 18.75 8.70752 19.8633 8.70752 21.2695Z" fill="#94A3B8"/>
+                                </svg>
+                            </div>
                             <div class="action-btn-label">知らない</div>
                         </div>
                         <div class="action-btn known-btn" onclick="app.markAsKnown()">
-                            <div class="action-btn-icon">○</div>
+                            <div class="action-btn-icon">
+                                <svg width="25" height="25" viewBox="0 0 24.9609 24.9609" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.4805 0C5.56641 0 0 5.56641 0 12.4805C0 19.3945 5.56641 24.9609 12.4805 24.9609C19.3945 24.9609 24.9609 19.3945 24.9609 12.4805C24.9609 5.56641 19.3945 0 12.4805 0ZM12.4805 22.5C6.97266 22.5 2.46094 17.9883 2.46094 12.4805C2.46094 6.97266 6.97266 2.46094 12.4805 2.46094C17.9883 2.46094 22.5 6.97266 22.5 12.4805C22.5 17.9883 17.9883 22.5 12.4805 22.5Z" fill="#94A3B8"/>
+                                </svg>
+                            </div>
                             <div class="action-btn-label">知っている</div>
                         </div>
                     </div>
