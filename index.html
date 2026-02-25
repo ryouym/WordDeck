@@ -673,9 +673,7 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 
                 this.currentQueue = [];
                 this.currentIndex = 0;
-                this.reappearQueue = [];
-                this.newWordsSinceReappear = 0;
-                
+
                 this.isDragging = false;
                 this.startX = 0;
                 this.startY = 0;
@@ -732,8 +730,6 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 // Combine: struggling words first, then others
                 this.currentQueue = [...struggling, ...others];
                 this.currentIndex = 0;
-                this.reappearQueue = [];
-                this.newWordsSinceReappear = 0;
             }
 
             shuffle(array) {
@@ -800,8 +796,8 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 this.strugglingWords.add(word.english);
                 this.saveToStorage(STORAGE_KEYS.STRUGGLING, this.strugglingWords);
 
-                // Add to reappear queue
-                this.reappearQueue.push(word);
+                // 5枚後に再表示（新しいカード・再表示カード合わせて5枚後）
+                this.currentQueue.splice(this.currentIndex + 6, 0, word);
 
                 this.vibrate();
                 this.nextWord();
@@ -833,26 +829,7 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
 
             nextWord() {
                 this.currentIndex++;
-                this.newWordsSinceReappear++;
                 this.isFlipped = false;
-
-                // Check if we need to reappear struggling words
-                if (this.newWordsSinceReappear >= 3 && this.reappearQueue.length > 0) {
-                    const reappearWord = this.reappearQueue.shift();
-                    this.currentQueue.splice(this.currentIndex + 3, 0, reappearWord);
-                    this.newWordsSinceReappear = 0;
-                }
-
-                // If current queue is exhausted, check if there are struggling words to reappear
-                if (!this.getCurrentWord()) {
-                    if (this.reappearQueue.length > 0) {
-                        // Add all remaining struggling words back to the queue
-                        while (this.reappearQueue.length > 0) {
-                            this.currentQueue.push(this.reappearQueue.shift());
-                        }
-                        this.newWordsSinceReappear = 0;
-                    }
-                }
 
                 if (this.getCurrentWord()) {
                     this.render();
