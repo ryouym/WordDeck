@@ -332,9 +332,17 @@
         }
 
         .swipe-icon {
-            font-size: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swipe-label {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 18px;
             font-weight: 700;
-            line-height: 1;
+            letter-spacing: 1px;
+            margin-top: -20px;
         }
 
         /* Completion Screen */
@@ -886,17 +894,20 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
 
                 const overlay = card.querySelector('.swipe-overlay');
                 const swipeIcon = overlay.querySelector('.swipe-icon');
+                const swipeLabel = overlay.querySelector('.swipe-label');
 
                 if (direction === 'right') {
                     overlay.className = 'swipe-overlay know';
-                    swipeIcon.textContent = '○';
+                    swipeIcon.innerHTML = '<svg viewBox="0 0 100 100" width="96" height="96" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="9" fill="none"/></svg>';
+                    swipeLabel.textContent = '知っている';
                     overlay.style.opacity = 1;
                     card.style.transition = 'transform 0.3s ease';
                     card.style.transform = `translateX(${window.innerWidth}px) rotate(30deg)`;
                     setTimeout(() => this.markAsKnown(), 300);
                 } else {
                     overlay.className = 'swipe-overlay unknown';
-                    swipeIcon.textContent = '✖️';
+                    swipeIcon.innerHTML = '<svg viewBox="0 0 100 100" width="96" height="96" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="22" x2="78" y2="78" stroke="currentColor" stroke-width="9" stroke-linecap="round"/><line x1="78" y1="22" x2="22" y2="78" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>';
+                    swipeLabel.textContent = '知らない';
                     overlay.style.opacity = 1;
                     card.style.transition = 'transform 0.3s ease';
                     card.style.transform = `translateX(-${window.innerWidth}px) rotate(-30deg)`;
@@ -985,16 +996,19 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                 
                 const overlay = card.querySelector('.swipe-overlay');
                 const swipeIcon = overlay.querySelector('.swipe-icon');
+                const swipeLabel = overlay.querySelector('.swipe-label');
                 const opacity = Math.min(Math.abs(horizontalMove) / 60, 1);
-                
+
                 if (horizontalMove > 30) {
                     overlay.className = 'swipe-overlay know';
                     overlay.style.opacity = opacity;
-                    swipeIcon.textContent = '○';
+                    swipeIcon.innerHTML = '<svg viewBox="0 0 100 100" width="96" height="96" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="9" fill="none"/></svg>';
+                    swipeLabel.textContent = '知っている';
                 } else if (horizontalMove < -30) {
                     overlay.className = 'swipe-overlay unknown';
                     overlay.style.opacity = opacity;
-                    swipeIcon.textContent = '✖️';
+                    swipeIcon.innerHTML = '<svg viewBox="0 0 100 100" width="96" height="96" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="22" x2="78" y2="78" stroke="currentColor" stroke-width="9" stroke-linecap="round"/><line x1="78" y1="22" x2="22" y2="78" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>';
+                    swipeLabel.textContent = '知らない';
                 } else {
                     overlay.style.opacity = 0;
                 }
@@ -1119,6 +1133,7 @@ set about,着手する (97%),【周囲を配置して始める】「周囲(about
                             </div>
                             <div class="swipe-overlay">
                                 <div class="swipe-icon"></div>
+                                <div class="swipe-label"></div>
                             </div>
                         </div>
                     </div>
